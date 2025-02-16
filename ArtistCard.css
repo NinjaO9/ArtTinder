@@ -1,0 +1,144 @@
+/* 🔵 Fullscreen Page */
+body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    background-color: #121212;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+  }
+  
+  /* 🔲 Fullscreen Layout */
+  .artist-page {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  /* 🟥 EXIT BUTTON */
+  .exit-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: 2px solid red;
+    color: red;
+    font-size: 16px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .exit-button:hover {
+    background: red;
+    color: white;
+  }
+  
+  /* 🎨 Artist Content */
+  .artist-content {
+    width: 50%;
+    max-width: 600px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  /* 🖊️ Artist Name */
+  .artist-name-input {
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    background: transparent;
+    color: white;
+    border: 2px solid white;
+    border-radius: 6px;
+    padding: 10px;
+    width: 100%;
+    outline: none;
+  }
+  
+  /* 📸 Image Upload */
+  .image-upload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .upload-label {
+    display: block;
+    background: #444;
+    padding: 10px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .upload-label:hover {
+    background: #666;
+  }
+  
+  .upload-label input {
+    display: none;
+  }
+  
+  .artwork {
+    max-width: 100%;
+    border-radius: 10px;
+    margin-top: 10px;
+    box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.2);
+  }
+  
+  /* 📝 About */
+  .about-input {
+    width: 100%;
+    height: 80px;
+    border: none;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    outline: none;
+    resize: none;
+  }
+  
+  /* ✅ Buttons */
+  .buttons {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .reject, .accept {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .reject {
+    background-color: red;
+    color: white
+}  
