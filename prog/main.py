@@ -12,8 +12,9 @@ from prog.api_interaction.querys import search
 def main():
     searchQ = search()
     Searched_Artist = input("Enter the name of the artist you want to search: ")
-    
-    print(searchQ.search_by_artist(Searched_Artist=Searched_Artist))
+    searchQ.search_by_artist(Searched_Artist=Searched_Artist)
+
+    searchQ._artists[0].display_artist()
     
 
 if __name__ == "__main__":

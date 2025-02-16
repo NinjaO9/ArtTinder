@@ -33,5 +33,4 @@ class search:
         self._type = "artist"
         self._params.update(q= self._kwarg, type= self._type)
         response = get(url=self._url, headers=self._headers, params=self._params).json()['artists']['items'][0]
-        self._artists.append(dummyUser(response['name'], response['genres'][0]))
-        return response
+        self._artists.append(dummyUser(response['name'], response['genres'][0], response['followers']['total'], response['images'][0]['url']))

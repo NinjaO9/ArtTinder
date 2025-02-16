@@ -22,4 +22,4 @@ class artist:
         self._genre = genre
 
     def display_artist(self):
-        print(f"Name: {self._name}, Genre: {self._genre}, Followers: {self._followers}")
+        print(f"Name: {self._name}, Genre: {self._genre}, Followers: {self._followers}, Image: {self._picture}")
