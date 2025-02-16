@@ -63,8 +63,7 @@
 <body onload="getRandomMatch()">
     <div class="match-container">
         <h1>🎉 It's a Match! ✅</h1>
-        <p>You matched with **<span id="match-name"></span>** 🎵</p>
-        <button onclick="window.location.href='index.html'">Go Back</button>
+        <button onclick="window.location.href='{{ url_for(home) }}'">Go Back</button>
     </div>
 </body>
 </html>

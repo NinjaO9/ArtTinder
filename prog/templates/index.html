@@ -192,16 +192,6 @@
             nextSong();
         }
 
-        function matchChance() {
-            // 10% chance of triggering match animation and transition
-            if (Math.random() < 0.50) {
-                document.getElementById("match-overlay").style.display = "flex";
-                setTimeout(() => {
-                    window.location.href = "match.html";
-                }, 2000);
-            }
-        }
-
         audio.addEventListener("timeupdate", updateProgressBar);
     </script>
     
