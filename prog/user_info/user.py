@@ -7,6 +7,11 @@ class User:
         self._age = age
         self._likedMusic = LikedMusic()
 
+    def __init__(self):
+        self._name = input("Enter your name: ")
+        self._age = int(input("Enter your age: "))
+        self._likedMusic = LikedMusic()
+
     def __str__(self):
         return f"Name: {self._name}, Age: {self._age}, Number of liked songs: {self._likedMusic.get_length()}"
     def change_name(self, name):
