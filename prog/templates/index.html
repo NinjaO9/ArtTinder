@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            background-image: url('images/singer.jpg');
+            background-image: url("{{ url_for('static', filename='images/singer.jpg') }}");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -60,7 +60,7 @@
             height: 200px;
             display: block;
             margin: 20px auto;
-            background: url('images/record.png') no-repeat center;
+            background: url("{{ url_for('static', filename='images/record.png') }}") no-repeat center;
             background-size: cover;
             border-radius: 50%;
             animation: spin 5s linear infinite;
@@ -109,9 +109,15 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
     </style>
     <script>
-        let songs = ["Not Like Us (1).mp3", "Gods Plan.mp3", "Billie Eilish  WILDFLOWER Official Lyric Video.mp3", "Lady Gaga Bruno Mars  Die With A Smile Lyrics (1).mp3", "Taylor Swift  Style Lyrics.mp3"];
+        let songs = ["static/music/Not Like Us (1).mp3", "static/music/Gods Plan.mp3", "static/music/Billie Eilish  WILDFLOWER Official Lyric Video.mp3", "static/music/Lady Gaga Bruno Mars  Die With A Smile Lyrics (1).mp3", "static/music/Taylor Swift  Style Lyrics.mp3"];
         let currentSongIndex = -1;
         let audio = new Audio();
         let isPlaying = false;
@@ -151,29 +157,70 @@
             progressBar.style.width = progress + "%";
         }
 
-        audio.addEventListener("timeupdate", updateProgressBar);
-
         function handleYesClick() {
-            nextSong(); // Play next song
+            console.log('Yes clicked');
+            fetch('/likeButton', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ response: 'Yes' })  // Send data to the server
+            })
+            .then(response => response.json())
+            .catch(error => console.error('Error:', error));
 
+            // Play the next song and potentially trigger the match animation
+            nextSong();
+
+            // 10% chance of triggering match animation and transition
+            matchChance();
+        }
+
+        function handleNoClick() {
+            console.log('No clicked');
+            fetch('/likeButton', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ response: 'No' })  // Send data to the server
+            })
+            .then(response => response.json())
+            .catch(error => console.error('Error:', error));
+
+            // Play the next song
+            nextSong();
+        }
+
+        function matchChance() {
             // 10% chance of triggering match animation and transition
             if (Math.random() < 0.50) {
                 document.getElementById("match-overlay").style.display = "flex";
                 setTimeout(() => {
                     window.location.href = "match.html";
-                }, 2000); // Wait for 2 seconds before redirecting
+                }, 2000);
             }
         }
+
+        audio.addEventListener("timeupdate", updateProgressBar);
     </script>
+    
 </head>
 <body>
     <div class="background-overlay"></div>
     <div class="music-controls">
         <h2 style="color: white;">My Music Matcher</h2>
         <div class="album-art"></div>
-        <button onclick="togglePlayPause()">▶️ Play/Pause</button>
-        <button onclick="handleYesClick()">Yes 🔥</button>
-        <button onclick="nextSong()">No 💩</button>
+        
+        <div class="button-container">
+            <form id="yesForm">
+                <button type="button" onclick="handleYesClick()">Yes</button>
+            </form>
+            <button onclick="togglePlayPause()">▶️ Play/Pause</button>
+            <form id="noForm">
+                <button type="button" onclick="handleNoClick()">No</button>
+            </form>
+        </div>
         <div class="progress-container">
             <div class="progress-bar" id="progress-bar"></div>
         </div>
