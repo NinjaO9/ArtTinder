@@ -117,7 +117,37 @@
         }
     </style>
     <script>
-        let songs = ["static/music/Not Like Us (1).mp3", "static/music/Gods Plan.mp3", "static/music/Billie Eilish  WILDFLOWER Official Lyric Video.mp3", "static/music/Lady Gaga Bruno Mars  Die With A Smile Lyrics (1).mp3", "static/music/Taylor Swift  Style Lyrics.mp3"];
+        let songs = [
+            {
+                src: "static/music/NotLikeUs.mp3",
+                title: "Not Like Us",
+                artist: "AJ Mitchell"
+            },
+            {
+                src: "static/music/GodsPlan.mp3",
+                title: "God's Plan",
+                artist: "Drake"
+            },
+            {
+                src: "static/music/BillieEilish_WILDFLOWER.mp3",
+                title: "WILDFLOWER",
+                artist: "Billie Eilish"
+            },
+            {
+                src: "static/music/LadyGaga_BrunoMars_DieWithASmile.mp3",
+                title: "Die With A Smile",
+                artist: "Lady Gaga & Bruno Mars"
+            },
+            {
+                src: "static/music/TaylorSwift_Style.mp3",
+                title: "Style",
+                artist: "Taylor Swift"
+            },
+            {
+                src: "static/music/RandLofi.mp3",
+                title: "Rand Lofi",
+                artist: "Lofi Girl"
+            }];
         let currentSongIndex = -1;
         let audio = new Audio();
         let isPlaying = false;
@@ -127,7 +157,7 @@
                 audio.pause();
             } else {
                 if (!audio.src || audio.src === window.location.href) {
-                    playRandomSong();
+                    nextSong();
                 } else {
                     audio.play();
                 }
@@ -137,12 +167,45 @@
 
         function playRandomSong() {
             let newIndex;
-            do {
-                newIndex = Math.floor(Math.random() * songs.length);
-            } while (newIndex === currentSongIndex);
+            // do {
+            //     newIndex = Math.floor(Math.random() * songs.length);
+            // } while (newIndex === currentSongIndex);
+            currentSongIndex = currentSongIndex + 1;
+            if (currentSongIndex >= songs.length){
+                currentSongIndex = 0;
+                fetch('/match', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 
+                })  // Send data to the server
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                })
+                .catch(error => console.error('Error:', error));
+            }
+            let artist = songs[currentSongIndex]['artist'];
+            let title = songs[currentSongIndex]['title'];
+            fetch('/update', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ 
+                title: title,
+                artist: artist
+             })  // Send data to the server
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch(error => console.error('Error:', error));
 
-            currentSongIndex = newIndex;
-            audio.src = songs[currentSongIndex];
+            audio.src = songs[currentSongIndex]['src'];
             audio.play();
             isPlaying = true;
         }
@@ -158,34 +221,49 @@
         }
 
         function handleYesClick() {
+            let artist = songs[currentSongIndex]['artist'];
+            let title = songs[currentSongIndex]['title'];
             console.log('Yes clicked');
             fetch('/likeButton', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ response: 'Yes' })  // Send data to the server
+            body: JSON.stringify({ 
+                title: title,
+                artist: artist,
+                response: 'Yes' 
+            })  // Send data to the server
             })
             .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+            })
             .catch(error => console.error('Error:', error));
 
             // Play the next song and potentially trigger the match animation
             nextSong();
 
             // 10% chance of triggering match animation and transition
-            matchChance();
+            //matchChance();
         }
 
         function handleNoClick() {
             console.log('No clicked');
-            fetch('/likeButton', {
+            let artist = songs[currentSongIndex]['artist'];
+            let title = songs[currentSongIndex]['title'];
+            fetch('/SkipButton', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ response: 'No' })  // Send data to the server
+                body: JSON.stringify({ 
+                title: title,
+                artist: artist,
+                response: 'Yes' 
+            })  // Send data to the server
             })
             .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+            })
             .catch(error => console.error('Error:', error));
 
             // Play the next song

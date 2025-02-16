@@ -15,9 +15,13 @@ from spotipy import Spotify
 app = Flask(__name__)
 
 cursong = search()
-cursong.get_random_song()
+#cursong.get_random_song()
+curUser = User("","")
+dummyUser = User("John","Johnsezky25")
 
-curUser = User("test", 20)
+if os.getenv("ACCESS_TOKEN") == None:
+    print("No access token found.")
+    exit()
 
 @app.route('/')
 def home():
@@ -25,21 +29,37 @@ def home():
 
 @app.route('/login', methods=['POST'])
 def login():
-    curUser
-    return render_template('index.html', access_token=os.getenv("ACCESS_TOKEN"))
+    global curUser
+    curUser.change_name(request.form['username'])
+    curUser.change_password(request.form['password'])
+    return render_template('index.html')
 
-def index():
-    return render_template('index.html') 
+@app.route('/update', methods=['POST'])
+def update_song():
+    data = request.get_json()
+    #print(cursong.search_song_specific(data.get('title'), data.get('artist')))
+    return jsonify({'message': 'Success'})
 
 @app.route('/likeButton', methods=['POST'])
 def like_button():
-    print("Help me")
+    data = request.get_json()
+    curUser.like_song(data.get('title'), data.get('artist'), 'empty')
+    dummyUser.like_song(data.get('title'), data.get('artist'), 'empty')
     return jsonify({'message': 'Success'})
 
-@app.route('/skipsong', methods=['POST'])
+@app.route('/SkipButton', methods=['POST'])
 def skipsong():
-    cursong.get_random_song()
-    return redirect(url_for('index.html'))
+    data = request.get_json()
+    dummyUser.like_song(data.get('title'), data.get('artist'), 'empty')
+    return jsonify({'message': 'Success'})
+
+@app.route('/match',  methods=['POST'])
+def match():
+    curUser.display_liked_songs()
+    commonSongs = curUser.compare_likes(dummyUser)
+    dummyUser.display_liked_songs()
+    print(commonSongs) # Proof of concept for being able to find matches between two users.
+    return jsonify({'message': 'Success'})
 
 @app.route('/play')
 def play():

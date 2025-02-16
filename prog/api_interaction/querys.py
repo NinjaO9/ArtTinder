@@ -43,3 +43,10 @@ class search:
         self._params.update(q=self._kwarg, type= self._type)
         response = get(url=self._url, headers=self._headers, params=self._params).json()['tracks']['items'][random.randint(0, 19)]
         return response
+    
+    def search_song_specific(self, title, artist):
+        self._type = "track"
+        self._kwarg = f"{title} {artist}"
+        self._params.update(q=self._kwarg, type= self._type)
+        response = get(url=self._url, headers=self._headers, params=self._params).json()['tracks']['items'][0]
+        return response
