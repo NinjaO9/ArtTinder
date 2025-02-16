@@ -42,5 +42,4 @@ class search:
         self._kwarg = random.choice(self.allletters)
         self._params.update(q=self._kwarg, type= self._type)
         response = get(url=self._url, headers=self._headers, params=self._params).json()['tracks']['items'][random.randint(0, 19)]
-        #print(f"Song: {response['name']}, Artist: {response['artists'][0]['name']}, Album: {response['album']['name']}")
         return response
