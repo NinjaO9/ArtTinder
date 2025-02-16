@@ -137,3 +137,13 @@ DATABASES = {
         'PORT': '3306',
     }
 }
+
+
+import os
+
+# The directory where uploaded files will be stored
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# The URL that will be used to access media files in development
+MEDIA_URL = '/media/'
+
