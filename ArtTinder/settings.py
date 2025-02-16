@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-r^26(o!h^s)1!v(9k1#3b662e(l2hs6=%58=72mk%juyhmq@s!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -147,3 +147,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # The URL that will be used to access media files in development
 MEDIA_URL = '/media/'
 
+
+
+
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
