@@ -2,6 +2,8 @@ from dotenv import load_dotenv
 from requests import post
 import os
 
+# Not a part of the proper program, rather this is a way to refresh our key, should it expire.
+
 load_dotenv()
 
 data = {

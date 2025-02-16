@@ -11,10 +11,19 @@ from prog.api_interaction.querys import search
 
 def main():
     searchQ = search()
-    Searched_Artist = input("Enter the name of the artist you want to search: ")
-    searchQ.search_by_artist(Searched_Artist=Searched_Artist)
+    newuser = User("John", 21)
 
-    searchQ._artists[0].display_artist()
+    song = searchQ.get_random_song()
+    newuser.like_song(song['name'], song['artists'][0]['name'], song['album']['name'])
+    song = searchQ.get_random_song()
+    newuser.like_song(song['name'], song['artists'][0]['name'], song['album']['name'])
+    song = searchQ.get_random_song()
+    newuser.like_song(song['name'], song['artists'][0]['name'], song['album']['name'])
+    song = searchQ.get_random_song()
+    newuser.like_song(song['name'], song['artists'][0]['name'], song['album']['name'])
+
+    newuser.display_liked_songs()
+
     
 
 if __name__ == "__main__":
